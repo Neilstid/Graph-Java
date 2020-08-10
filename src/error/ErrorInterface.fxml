@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="91.0" prefWidth="301.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1" fx:controller="error.ErrorInterfaceController">
+   <children>
+      <Label fx:id="ErrorOutput" layoutX="6.0" layoutY="28.0" prefHeight="17.0" prefWidth="289.0" textFill="#df1010" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="OKButton" layoutX="235.0" layoutY="52.0" mnemonicParsing="false" onAction="#PressOkButton" text="Ok" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0" />
+   </children>
+</AnchorPane>

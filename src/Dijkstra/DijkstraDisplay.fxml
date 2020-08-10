@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Dijkstra.DijkstraDisplayController">
+   <center>
+      <Pane fx:id="Overlay" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
+   <bottom>
+      <AnchorPane prefHeight="27.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <Slider fx:id="SliderStep" prefHeight="17.0" prefWidth="539.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="58.0" AnchorPane.topAnchor="5.0" />
+            <Label fx:id="IndicatorStep" layoutX="551.0" layoutY="5.0" prefHeight="17.0" prefWidth="41.0" text="Label" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
+         </children>
+      </AnchorPane>
+   </bottom>
+</BorderPane>
