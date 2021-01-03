@@ -8,15 +8,15 @@ Usage
 
 When you will have launched the program, you will find the next interface :
 
-![empty interface](image_ReadMe/empty_interface.jpg?raw=true "Empty graph application")
+![empty interface](./image_ReadMe/empty_interface.jpg?raw=true "Empty graph application")
 
 You can then create by hand your graph (by adding edge and vertex) or asking the application to create a new random one or a complete graph.
 
-![complete interface](image_ReadMe/complete_graph.jpg?raw=true "Complete graph")
+![complete interface](./image_ReadMe/complete_graph.jpg?raw=true "Complete graph")
 
 Finaly you can apply some of algorithm :
 
-![Dijkstra algorithm](image_ReadMe/Dijkstra.jpg?raw=true "Dijkstra algorithm")
+![Dijkstra algorithm](./image_ReadMe/Dijkstra.jpg")
 
 Installation
 ------------
