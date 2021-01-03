@@ -72,11 +72,16 @@ public class EdgeCreate_Controller {
 		int sameOriented = 0;
 		int diferentOriented = 0;
 		
+		//take all edge from the first vertex selected
 	    ArrayList<Edge> EdgeList = new ArrayList<Edge>(this.vConvert.getVertex(this.Vertex1List.getValue()).linkToMe);
-		ArrayList<Edge> EdgeListVertex2 = new ArrayList<Edge>(this.vConvert.getVertex(this.Vertex2List.getValue()).linkToMe);
-		EdgeList.retainAll(EdgeListVertex2);
+	    //take all edge from the second vertex selected
+	    ArrayList<Edge> EdgeListVertex2 = new ArrayList<Edge>(this.vConvert.getVertex(this.Vertex2List.getValue()).linkToMe);
+		//Keep only edge in both list
+	    EdgeList.retainAll(EdgeListVertex2);
 		
+		//for each edge from the first vertex to the second
 		for(Edge e:EdgeList) {
+			//check if an edge has the same orientation of the new edge
 			if(e.getV1() == this.vConvert.getVertex(this.Vertex1List.getValue()) && e.getV1() == this.vConvert.getVertex(this.Vertex1List.getValue())){
 				sameOriented++;
 				break;

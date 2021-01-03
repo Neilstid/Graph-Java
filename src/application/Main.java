@@ -18,6 +18,7 @@ import javafx.fxml.FXMLLoader;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
+		//run the main interface
 		try {
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("MainInterface.fxml"));
 			Scene scene = new Scene(root,700,500);

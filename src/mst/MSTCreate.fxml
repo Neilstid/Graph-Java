@@ -7,20 +7,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="387.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Dijkstra.DijkstraCreateController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="387.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mst.MSTCreateController">
    <center>
       <AnchorPane prefHeight="201.0" prefWidth="387.0" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox fx:id="EndingVertex" layoutX="236.0" layoutY="66.0" prefWidth="150.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="65.0" />
             <ComboBox fx:id="StartingVertex" layoutY="64.0" prefWidth="150.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="65.0" />
             <Label layoutX="14.0" layoutY="47.0" text="Start from :" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="45.0" />
-            <Label layoutX="190.0" layoutY="68.0" text="to" AnchorPane.topAnchor="70.0" />
             <Button fx:id="CreateButton" layoutX="322.0" layoutY="114.0" mnemonicParsing="false" onAction="#PressCreateButton" text="Create" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="10.0" />
             <Button fx:id="CancelButton" layoutX="251.0" layoutY="114.0" mnemonicParsing="false" onAction="#PressCancelButton" text="Cancel" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="80.0" />
             <ColorPicker fx:id="ColorUsedEdge" layoutX="142.0" layoutY="108.0" AnchorPane.bottomAnchor="106.66666666666667" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="105.0" />
-            <ColorPicker fx:id="ColorUsedVertex" layoutX="142.0" layoutY="145.0" AnchorPane.bottomAnchor="66.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="105.0" />
             <Label layoutX="14.0" layoutY="112.0" text="Color of used edge :" AnchorPane.bottomAnchor="110.66666666666667" AnchorPane.leftAnchor="14.0" />
-            <Label layoutX="14.0" layoutY="149.0" text="Color or used vertex :" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="14.0" />
          </children>
       </AnchorPane>
    </center>

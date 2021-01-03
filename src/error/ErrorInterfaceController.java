@@ -13,12 +13,14 @@ import javafx.stage.Stage;
  */
 public class ErrorInterfaceController {
 
+	//label to print the error message
     @FXML
     private Label ErrorOutput;
 
     @FXML
     private Button OKButton;
 
+    //When the user click on ok button
     @FXML
     void PressOkButton(ActionEvent event) {
 		//Close the stage

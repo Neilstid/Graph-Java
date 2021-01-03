@@ -36,6 +36,7 @@ public class MouseGestures {
 		enableDragText(app, node);
 	}
 
+	//When user click
 	EventHandler<MouseEvent> circleOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -62,6 +63,7 @@ public class MouseGestures {
 		}
 	};
 
+	//When user drag
 	EventHandler<MouseEvent> circleOnMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
@@ -92,6 +94,11 @@ public class MouseGestures {
 		}
 	};
 
+	/**
+	 * To enable drag
+	 * @param app (MainInterface_Controller)
+	 * @param node (Node) : node that should be draggable
+	 */
 	private void enableDragText(MainInterface_Controller app, Node node) {
 		node.setOnMousePressed(new EventHandler<MouseEvent>() {
 			@Override

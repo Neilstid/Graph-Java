@@ -10,11 +10,18 @@ import java.util.function.Predicate;
 //This project import
 import Dijkstra.DijkstraCreateController;
 import GestionGraph.EdgeCreation;
+import TabuSearchTSP.TabuSearchCreateController;
 import VertexGestion.VertexCreate_Controller;
+import bfs.BFSCreateController;
+import branchAndBound.LittleCreateController;
+import dfs.DFSCreateController;
 import error.ErrorInterfaceController;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
+import graphCreation.CompleteGraphController;
+import graphCreation.RandomGraphController;
+import parameter.LoadInterfaceController;
 import parameter.SaveAsController;
 import parameter.Setting;
 
@@ -43,6 +50,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import mst.MSTCreateController;
 
 
 /**
@@ -71,6 +79,12 @@ public class MainInterface_Controller extends Application {
 	//Default radius of vertex
 	protected int radiusOfVertex = 5;
 
+    @FXML
+    private Button BFSButton;
+	
+    @FXML
+    private Button PrimMSTButton;
+	
 	//Borderpane where element are
 	@FXML
 	private BorderPane Window;
@@ -79,60 +93,334 @@ public class MainInterface_Controller extends Application {
 	@FXML
 	private AnchorPane BehindOverlay;
 
+	//Button to open the left menu (for algorihtm)
 	@FXML
 	private Button MenuButtonLeft;
 
+	//Main pane (where the graph is display)
 	@FXML
 	public Pane Overlay;
 
 	@FXML
 	private TitledPane EdgeRightMenu;
 
+	//The top bar 
 	@FXML
 	private MenuBar MenuTopBar;
 
+	//Button to hide the left menu (when it is open)
 	@FXML
 	private Button BackLeftSideMenu;
 
+	//The anchorpane where the left menu is
 	@FXML
 	private AnchorPane LeftSideMenu;
 
+	//The graph section of the left menu
 	@FXML
 	private TitledPane GraphLeftMenu;
 
+	//The algorithm section of the left menu
 	@FXML
 	private TitledPane AlgorithmLeftMenu;
 
 	@FXML
-	private TitledPane ParametersLeftMenu;
+	private TitledPane GraphParameterLeftMenu;
 
+	//Color picker for the default color of the vertex
 	@FXML
 	private ColorPicker ColorPickerObject;
 
+	//Selection of oriented or non oriented graph
 	@FXML
 	public ComboBox<String> TypeGraph;
 
+	//Group of button for the action of the user (non selected, edge, vertex)
     @FXML
     private ToggleGroup UserAction;
 
+    //Creation of edge selected button
     @FXML
     private ToggleButton EdgeToggle;
 
+    //Mouse selected button (to move, delete, update vertex or edge)
     @FXML
     private ToggleButton NoneToggle;
     
+    //Creation of Vertex selected button
     @FXML
     private ToggleButton VertexToggle;
     
+    //Button to save the graph
     @FXML
     private Button SaveButton;
 
+    //Button to delete the graph
     @FXML
     private Button DeleteButton;
     
+    //Button to apply dijkstra on the graph
     @FXML
     private Button DijkstraButton;
     
+    //Button to create a new complete graph
+    @FXML
+    private Button CompleteGraph;
+
+    //Button to create a new random graph
+    @FXML
+    private Button RandomGraph;
+    
+    //Button to applytabu search for tsp
+    @FXML
+    private Button TabuSearchTSPButton;
+    
+    //Button tp apply branch and bound
+    @FXML
+    private Button BranchAndBoundButton;
+    
+    @FXML
+    private Button DFSButton;
+
+    @FXML
+    private Button LoadButton;
+    
+
+    @FXML
+    void PressLoad(ActionEvent event) {
+    	try {
+			FXMLLoader fxmlLoader = new FXMLLoader(
+					getClass().getResource("/parameter/LoadInterface.fxml"));
+			Parent root1 = (Parent) fxmlLoader.load();
+
+			LoadInterfaceController sac = fxmlLoader.<LoadInterfaceController>getController();
+			sac.init_interface(this);
+
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root1));
+			stage.setTitle("Load graph");
+
+			String ToIcon = "\\ressources\\Icon\\GraphApp_icon.png";
+			Path currentRelativePath = Paths.get("");
+			Path curentAbsoluteDirectory = currentRelativePath.toAbsolutePath();
+			String TotalPath = "file:" + curentAbsoluteDirectory.toString() + ToIcon;
+			stage.getIcons().add(new Image(TotalPath));
+
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    //To create DFS
+    @FXML
+    void PressDFS(ActionEvent event) {
+    	try {
+			FXMLLoader fxmlLoader = new FXMLLoader(
+					getClass().getResource("/dfs/DFSCreate.fxml"));
+			Parent root1 = (Parent) fxmlLoader.load();
+
+			DFSCreateController dcc = fxmlLoader.<DFSCreateController>getController();
+			dcc.initInterface(Graph.getListVertex(this.Overlay), Graph.getListEdge(this.Overlay), this.isOriented);
+			
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root1));
+			stage.setTitle("DFS");
+
+			String ToIcon = "\\ressources\\Icon\\GraphApp_icon.png";
+			Path currentRelativePath = Paths.get("");
+			Path curentAbsoluteDirectory = currentRelativePath.toAbsolutePath();
+			String TotalPath = "file:" + curentAbsoluteDirectory.toString() + ToIcon;
+			stage.getIcons().add(new Image(TotalPath));
+
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    //To create BFS
+    @FXML
+    void PressBFSButton(ActionEvent event) {
+    	try {
+			FXMLLoader fxmlLoader = new FXMLLoader(
+					getClass().getResource("/bfs/BFSCreate.fxml"));
+			Parent root1 = (Parent) fxmlLoader.load();
+
+			BFSCreateController bcc = fxmlLoader.<BFSCreateController>getController();
+			bcc.initInterface(Graph.getListVertex(this.Overlay), Graph.getListEdge(this.Overlay), this.isOriented);
+			
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root1));
+			stage.setTitle("BFS");
+
+			String ToIcon = "\\ressources\\Icon\\GraphApp_icon.png";
+			Path currentRelativePath = Paths.get("");
+			Path curentAbsoluteDirectory = currentRelativePath.toAbsolutePath();
+			String TotalPath = "file:" + curentAbsoluteDirectory.toString() + ToIcon;
+			stage.getIcons().add(new Image(TotalPath));
+
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    /**
+     * Run the branch and bound Algorithm
+     * @param event Click of the user
+     */
+    @FXML
+    void PressBranchAndBound(ActionEvent event) {
+    	try {
+			FXMLLoader fxmlLoader = new FXMLLoader(
+					getClass().getResource("/branchAndBound/LittleCreate.fxml"));
+			Parent root1 = (Parent) fxmlLoader.load();
+
+			LittleCreateController lcc = fxmlLoader.<LittleCreateController>getController();
+			lcc.init_interface(this.Overlay, this.isOriented);
+			
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root1));
+			stage.setTitle("Branch and Bound : Little Algorithm");
+
+			String ToIcon = "\\ressources\\Icon\\GraphApp_icon.png";
+			Path currentRelativePath = Paths.get("");
+			Path curentAbsoluteDirectory = currentRelativePath.toAbsolutePath();
+			String TotalPath = "file:" + curentAbsoluteDirectory.toString() + ToIcon;
+			stage.getIcons().add(new Image(TotalPath));
+
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    /**
+     * Run prim algorithm
+     * @param event  Click of the user
+     */
+    @FXML
+    void PressPrimMSTButton(ActionEvent event) {
+    	
+    	try {
+			FXMLLoader fxmlLoader = new FXMLLoader(
+					getClass().getResource("/mst/MSTCreate.fxml"));
+			Parent root1 = (Parent) fxmlLoader.load();
+
+			MSTCreateController tscc = fxmlLoader.<MSTCreateController>getController();
+			tscc.initInterface(Graph.getListVertex(this.Overlay), Graph.getListEdge(this.Overlay));
+			
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root1));
+			stage.setTitle("Prim Algorithm");
+
+			String ToIcon = "\\ressources\\Icon\\GraphApp_icon.png";
+			Path currentRelativePath = Paths.get("");
+			Path curentAbsoluteDirectory = currentRelativePath.toAbsolutePath();
+			String TotalPath = "file:" + curentAbsoluteDirectory.toString() + ToIcon;
+			stage.getIcons().add(new Image(TotalPath));
+
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    /**
+     * Run the tabu search
+     * @param event  Click of the user
+     */
+    @FXML
+    void PressTabuSearchTSPButton(ActionEvent event) {
+    	try {
+			FXMLLoader fxmlLoader = new FXMLLoader(
+					getClass().getResource("/TabuSearchTSP/TabuSearchCreate.fxml"));
+			Parent root1 = (Parent) fxmlLoader.load();
+
+			TabuSearchCreateController tscc = fxmlLoader.<TabuSearchCreateController>getController();
+			tscc.init_interface(this);
+			
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root1));
+			stage.setTitle("Tabu search for Travelling Salesman Problem");
+
+			String ToIcon = "\\ressources\\Icon\\GraphApp_icon.png";
+			Path currentRelativePath = Paths.get("");
+			Path curentAbsoluteDirectory = currentRelativePath.toAbsolutePath();
+			String TotalPath = "file:" + curentAbsoluteDirectory.toString() + ToIcon;
+			stage.getIcons().add(new Image(TotalPath));
+
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    /**
+     * Create a complete graph
+     * @param event  Click of the user
+     */
+    @FXML
+    void PressCompleteGraph(ActionEvent event) {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(
+					getClass().getResource("/graphCreation/CompleteGraph.fxml"));
+			Parent root1 = (Parent) fxmlLoader.load();
+
+			CompleteGraphController rgc = fxmlLoader.<CompleteGraphController>getController();
+			rgc.init_interface(this);
+			
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root1));
+			stage.setTitle("Create a new complete graph");
+
+			String ToIcon = "\\ressources\\Icon\\GraphApp_icon.png";
+			Path currentRelativePath = Paths.get("");
+			Path curentAbsoluteDirectory = currentRelativePath.toAbsolutePath();
+			String TotalPath = "file:" + curentAbsoluteDirectory.toString() + ToIcon;
+			stage.getIcons().add(new Image(TotalPath));
+
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+
+    /**
+     * Create a random graph
+     * @param event  Click of the user
+     */
+    @FXML
+    void PressRandomGraph(ActionEvent event) {
+		try {
+			FXMLLoader fxmlLoader = new FXMLLoader(
+					getClass().getResource("/graphCreation/RandomGraph.fxml"));
+			Parent root1 = (Parent) fxmlLoader.load();
+
+			RandomGraphController rgc = fxmlLoader.<RandomGraphController>getController();
+			rgc.init_interface(this);
+
+			Stage stage = new Stage();
+			stage.setScene(new Scene(root1));
+			stage.setTitle("Create a new random graph");
+
+			String ToIcon = "\\ressources\\Icon\\GraphApp_icon.png";
+			Path currentRelativePath = Paths.get("");
+			Path curentAbsoluteDirectory = currentRelativePath.toAbsolutePath();
+			String TotalPath = "file:" + curentAbsoluteDirectory.toString() + ToIcon;
+			stage.getIcons().add(new Image(TotalPath));
+
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    /**
+     * Run dijkstra algorithm
+     * @param event  Click of the user
+     */
     @FXML
     void ApplyDijkstra(ActionEvent event) {
     	//Call the interface to solve
@@ -160,6 +448,10 @@ public class MainInterface_Controller extends Application {
 		}
     }
 
+    /**
+     * Save the graph
+     * @param event  Click of the user
+     */
     @FXML
     void PressSaveButton(ActionEvent event) {
     	try {
@@ -206,10 +498,13 @@ public class MainInterface_Controller extends Application {
     		e.setControlVisible(true);
     	}
     	
+    	//Indicate what element have been selected
     	this.userElementSelected = 0;
     	
+    	//Change cursor
     	this.Overlay.setCursor(javafx.scene.Cursor.DEFAULT);
     	
+    	//Clear the creation of edge
 		this.ec.empty();
     }
 
@@ -296,10 +591,12 @@ public class MainInterface_Controller extends Application {
 			type = true;
 		}
 
-		//if nonn changed do nothing else ...
+		//if none changed do nothing else ...
 		if (type == this.isOriented) {
 			return;
 		}else if(!type){
+			
+			//Get list of vertex
 			List<Vertex> v1 = Graph.getListVertex(this.Overlay);
 			List<Vertex> v2 = Graph.getListVertex(this.Overlay);
 			
@@ -344,26 +641,43 @@ public class MainInterface_Controller extends Application {
 			
 		}
 
+		//Change type of graph
 		this.isOriented = type;
+		
+		//Put the button for the MST disable
+		this.PrimMSTButton.setDisable(this.isOriented);
+		
+		//Update each edge
+		
+		//Get the list of edge
 		List<Edge> result = new ArrayList<Edge>();
 		result = Graph.getListEdge(this.Overlay);
 		
+		//update them
 		for (Edge e : result) {
 			e.setOriented(type);
 		}
 	}
 
+	/**
+	 * Hide the left menu
+	 * @param event  Click of the user
+	 */
 	@FXML
 	void PressBackLeftSideMenu(ActionEvent event) {
 		LeftSideMenu_Visible(false);
 	}
 
+	/**
+	 * Show the left menu
+	 * @param event Click of the user
+	 */
 	@FXML
 	void PressMenuButtonLeft(ActionEvent event) {
 		LeftSideMenu_Visible(true);
 	}
 
-	//Show the left side menu
+	//Show/Hide the left side menu
 	private void LeftSideMenu_Visible(boolean visible) {
 		LeftSideMenu.setVisible(visible);
 		LeftSideMenu.setManaged(visible);
@@ -403,6 +717,7 @@ public class MainInterface_Controller extends Application {
 		String ToIconEdge = "\\ressources\\Icon\\EdgeIcon.png";
 		String ToIconSave = "\\ressources\\Icon\\SaveIcon.png";
 		String ToIconDelete = "\\ressources\\Icon\\DeleteIcon.png";
+		String ToIconLoad = "\\ressources\\Icon\\LoadIcon.png";
 		
 		Path currentRelativePath = Paths.get("");
 		Path curentAbsoluteDirectory = currentRelativePath.toAbsolutePath();
@@ -412,12 +727,14 @@ public class MainInterface_Controller extends Application {
 		String TotalPathEdge = "file:" + curentAbsoluteDirectory.toString() + ToIconEdge;
 		String TotalPathSave = "file:" + curentAbsoluteDirectory.toString() + ToIconSave;
 		String TotalPathDelete = "file:" + curentAbsoluteDirectory.toString() + ToIconDelete;
+		String TotalPathLoad = "file:" + curentAbsoluteDirectory.toString() + ToIconLoad;
 		
 		ImageView imageNone = new ImageView(new Image(TotalPathNone));
 		ImageView imageVertex = new ImageView(new Image(TotalPathVertex));
 		ImageView imageEdge = new ImageView(new Image(TotalPathEdge));
 		ImageView imageSave = new ImageView(new Image(TotalPathSave));
 		ImageView imageDelete = new ImageView(new Image(TotalPathDelete));
+		ImageView imageLoad = new ImageView(new Image(TotalPathLoad));
 		
 		//Set the icon size
 		imageNone.setFitHeight(15);
@@ -435,16 +752,23 @@ public class MainInterface_Controller extends Application {
 		imageDelete.setFitHeight(15);
 		imageDelete.setFitWidth(15);
 		
+		imageLoad.setFitHeight(15);
+		imageLoad.setFitWidth(15);
+		
 		//put the icon on button
 		this.NoneToggle.setGraphic(imageNone);
 		this.VertexToggle.setGraphic(imageVertex);
 		this.EdgeToggle.setGraphic(imageEdge);
 		this.SaveButton.setGraphic(imageSave);
 		this.DeleteButton.setGraphic(imageDelete);
+		this.LoadButton.setGraphic(imageLoad);
 		
 		this.NoneToggle.setTooltip(new Tooltip("None : You will be able to move vertex, delete element, ..."));
 		this.VertexToggle.setTooltip(new Tooltip("Vertex"));
 		this.EdgeToggle.setTooltip(new Tooltip("Edge"));
+		this.SaveButton.setTooltip(new Tooltip("Save the graph"));
+		this.DeleteButton.setTooltip(new Tooltip("Delete the graph"));
+		this.LoadButton.setTooltip(new Tooltip("Load a graph"));
 	}
 	
 	//Function call on start
@@ -458,14 +782,17 @@ public class MainInterface_Controller extends Application {
 	}
 
 	@Override
-	public void start(Stage arg0) throws Exception {
+	public void start(Stage arg0) {
 	}
 
+	//When user click on pane
 	EventHandler<MouseEvent> CreateNewVertex = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent event) {
+			//Check if the user want to create a new Vertex
 			if (me.userElementSelected == 1) {
+				//Launch interface to create a new vertex
 				try {
 					FXMLLoader fxmlLoader = new FXMLLoader(
 							getClass().getResource("/VertexGestion/VertexCreation.fxml"));

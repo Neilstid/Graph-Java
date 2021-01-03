@@ -77,8 +77,11 @@ public class EdgeModifyController {
 		}
 	}
 
+	//function to reverse the edge
 	@FXML
 	void PressReverseVertex(ActionEvent event) {
+		//It will create a new edge with all the parameter of the other and delete the other
+		
 	    ArrayList<Edge> EdgeList = new ArrayList<Edge>(this.edgeModify.getV1().linkToMe);
 		ArrayList<Edge> EdgeListVertex2 = new ArrayList<Edge>(this.edgeModify.getV2().linkToMe);
 		EdgeList.retainAll(EdgeListVertex2);

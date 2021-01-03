@@ -193,13 +193,14 @@ public class DijkstraAlgo {
 			//Update the distance and the previous from the new vertex that we know
 			if (this.isOriented) {
 				for (Edge e : minVertex.linkToMe) {
+					//update distance and the previous if it's needed
 					if (!e.getV2().equals(minVertex)
 							&& e.getWeight() + this.Distance.get(minVertex) < this.Distance.get(e.getV2())) {
-						this.Distance.put(e.getV2(), e.getWeight() + this.Distance.get(minVertex));
+						this.Distance.put(e.getV2(), e.getWeight() + this.Distance.get(minVertex)); 
 						this.Previous.put(e.getV2(), minVertex);
 					}
 				}
-			} else {
+			} else { //if the graph is oriented
 				for (Edge e : minVertex.linkToMe) {
 					if (!e.getV2().equals(minVertex)
 							&& e.getWeight() + this.Distance.get(minVertex) < this.Distance.get(e.getV2())) {

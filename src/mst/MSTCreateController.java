@@ -1,4 +1,4 @@
-package Dijkstra;
+package mst;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -20,21 +20,9 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-/**
- * 
- * @author Neil Farmer
- *
- */
-public class DijkstraCreateController {
-
+public class MSTCreateController {
     @FXML
     private ColorPicker ColorUsedEdge;
-
-    @FXML
-    private ColorPicker ColorUsedVertex;
-	
-    @FXML
-    private ComboBox<String> EndingVertex;
 
     @FXML
     private ComboBox<String> StartingVertex;
@@ -51,9 +39,6 @@ public class DijkstraCreateController {
     //List of all edge
     private List<Edge> ListEdge;
     
-    //true if the graph is oriented, else false
-    private boolean isOriented;
-    
     //Class use to convert vertex to string and then display them in combobox
 	private VertexConverter vConvert;
 
@@ -66,25 +51,19 @@ public class DijkstraCreateController {
 
     @FXML
     void PressCreateButton(ActionEvent event) {
-    	//Run a new interface to show Dijkstra algorithm
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(
-					getClass().getResource("/Dijkstra/DijkstraDisplay.fxml"));
+					getClass().getResource("/mst/MSTDisplay.fxml"));
 			Parent root1 = (Parent) fxmlLoader.load();
 
-			DijkstraDisplayController vc = fxmlLoader.<DijkstraDisplayController>getController();
+			MSTDisplayController vc = fxmlLoader.<MSTDisplayController>getController();
 			Vertex start = this.vConvert.getVertex(this.StartingVertex.getValue());
-
-			Vertex end = null;
-			if(!this.EndingVertex.getValue().equals("none")) {
-				end = this.vConvert.getVertex(this.EndingVertex.getValue());
-			}
 				
-			vc.initInterface(start, end, this.ListVertex, this.ListEdge, this.isOriented, this.ColorUsedEdge.getValue(), this.ColorUsedVertex.getValue());
+			vc.initInterface(start, this.ListVertex, this.ListEdge, this.ColorUsedEdge.getValue());
 
 			Stage stage = new Stage();
 			stage.setScene(new Scene(root1));
-			stage.setTitle("Dijkstra's algorithm");
+			stage.setTitle("Minimum spanning tree");
 
 			String ToIcon = "\\ressources\\Icon\\GraphApp_icon.png";
 			Path currentRelativePath = Paths.get("");
@@ -106,12 +85,10 @@ public class DijkstraCreateController {
      * Function to init the interface
      * @param vertex (List Vertex ) : List of vertex on the graph
      * @param edge (List Edge) : List of edge on the graph
-     * @param _isOriented (boolean) : true if the graph is oriented, else false
      */
-    public void initInterface(List<Vertex> vertex, List<Edge> edge, boolean _isOriented) {
+    public void initInterface(List<Vertex> vertex, List<Edge> edge) {
     	this.ListVertex = vertex;
     	this.ListEdge = edge;
-    	this.isOriented = _isOriented;
     	
     	this.vConvert = new VertexConverter(vertex);
     	
@@ -119,13 +96,6 @@ public class DijkstraCreateController {
     	this.StartingVertex.getItems().addAll(vConvert.getListVertexKey());
     	this.StartingVertex.setValue(vConvert.getListVertexKey().get(0));
     	
-    	this.EndingVertex.getItems().addAll(vConvert.getListVertexKey());
-    	this.EndingVertex.getItems().add("none");
-    	this.EndingVertex.setValue("none");
-    	
-    	//default color
-    	this.ColorUsedVertex.setValue(Color.BLUE);
     	this.ColorUsedEdge.setValue(Color.RED);
     }
-
 }

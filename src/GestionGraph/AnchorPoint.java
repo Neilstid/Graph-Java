@@ -14,6 +14,13 @@ import javafx.scene.shape.*;
  */
 public class AnchorPoint extends Circle { 
 
+	/**
+	 * Constructor
+	 */
+	public AnchorPoint() {
+		
+	}
+	
 	//Constructor
 	/**
 	 * Constructor

@@ -161,7 +161,6 @@ public class Edge{
 		this.t_weight = new Text(Integer.toString(weight));
 		this.t_weight.setFont(Font.font(15));
 		
-		
 		if(type == 0) {
 			this.line = new BoundLine(_v1, _v2, col);
 			//Link the weight display and the edge
@@ -183,6 +182,7 @@ public class Edge{
 			
 			pane.getChildren().addAll(c.getControl1(), c.getControl2(), c.getLineControl1(), c.getLineControl2());
 			
+			//Put the control point
 			this.AnchorControl1 = c.getControl1();
 			this.AnchorControl2 = c.getControl2();
 			this.LineControl1 = c.getLineControl1();
@@ -195,6 +195,8 @@ public class Edge{
 			
 			this.line = c;
 		}
+		
+		//add all element to the pane
 		pane.getChildren().addAll(this.line);
 		pane.getChildren().addAll(this.t_weight);
 		pane.getChildren().addAll(this.head);
@@ -207,12 +209,31 @@ public class Edge{
 	}
 
 	/**
+	 * Constructor for calcul in algorithm
+	 * @param _v1
+	 * @param _v2
+	 * @param w
+	 */
+	public Edge(Vertex _v1, Vertex _v2, int w) {	
+		this.weight = w;
+		this.v1 = _v1;
+		this.v2 = _v2;
+		
+		this.v1.linkToMe.add(this);
+		this.v2.linkToMe.add(this);	
+	}
+	
+	/**
 	 * Function to draw the edge
 	 */
 	public void draw() {
 		this.Application.Overlay.getChildren().add(this.line);
 		this.Application.Overlay.getChildren().add(this.t_weight);
 		this.Application.Overlay.getChildren().add(this.head);
+		
+		this.t_weight.toBack();
+		this.head.toBack();
+		this.line.toBack();
 	}
 
 	/**
@@ -233,6 +254,14 @@ public class Edge{
 			this.Application.Overlay.getChildren().remove(this.LineControl1);
 			this.Application.Overlay.getChildren().remove(this.LineControl2);
 		}
+	}
+	
+	/**
+	 * Function to delete the edge on virtual (it will be no more link to his vertex but still print)
+	 */
+	public void RemoveFomVertex() {
+		this.v1.linkToMe.remove(this);
+		this.v2.linkToMe.remove(this);
 	}
 	
 	/**
@@ -268,6 +297,14 @@ public class Edge{
 		return this.v2;
 	}
 	
+	public Vertex getSecondVertex(Vertex v) {
+		if(this.v1.equals(v)) {
+			return this.v2;
+		}else {
+			return this.v1;
+		}
+	}
+	
 	/**
 	 * 
 	 * @param s (String) : The new weight (Or new element to display over the edge)
@@ -301,10 +338,118 @@ public class Edge{
 		this.head.setFill(Color.GRAY.deriveColor(0, 1, 1, 0.5));
 	}
 	
+	/**
+	 * Function to get color of the edge
+	 * @return The color of the edge
+	 */
+	public Color getColor() {
+		return (Color) this.line.getStroke();
+	}
+	
+	/**
+	 * Function to the text object 
+	 * @return The text object
+	 */
 	public Text getTextObject() {
 		return this.t_weight;
 	}
 	
+	/**
+	 * 
+	 * @return The start x of the line
+	 */
+	public double GetStartX() {
+		if (this.typeOfLine == 0) {
+			return ((Line) this.line).getStartX();
+		}else {
+			return ((CurveBoundLine) this.line).getStartX();
+		}
+	}
+	
+	/**
+	 * 
+	 * @return The start y of the line
+	 */
+	public double GetStartY() {
+		if (this.typeOfLine == 0) {
+			return ((Line) this.line).getStartY();
+		}else {
+			return ((CurveBoundLine) this.line).getStartY();
+		}
+	}
+	
+	/**
+	 * 
+	 * @return The end x of the line
+	 */
+	public double GetEndX() {
+		if (this.typeOfLine == 0) {
+			return ((Line) this.line).getEndX();
+		}else {
+			return ((CurveBoundLine) this.line).getEndX();
+		}
+	}
+	
+	/**
+	 * 
+	 * @return The end y of the line
+	 */
+	public double GetEndY() {
+		if (this.typeOfLine == 0) {
+			return ((Line) this.line).getEndY();
+		}else {
+			return ((CurveBoundLine) this.line).getEndY();
+		}
+	}
+	
+	/**
+	 * 
+	 * @return The x of the control point 1
+	 */
+	public double getControlX1() {
+		if(this.typeOfLine == 1) {
+			return ((CurveBoundLine) this.line).getControlX1();
+		}
+		return 0;
+	}
+	
+	/**
+	 *  
+	 * @return The y of the control point 1
+	 */
+	public double getControlY1() {
+		if(this.typeOfLine == 1) {
+			return ((CurveBoundLine) this.line).getControlY1();
+		}
+		return 0;
+	}
+	
+	/**
+	 * 
+	 * @return The x of the control point 2
+	 */
+	public double getControlX2() {
+		if(this.typeOfLine == 1) {
+			return ((CurveBoundLine) this.line).getControlX2();
+		}
+		return 0;
+	}
+	
+	/**
+	 *  
+	 * @return The y of the control point 2
+	 */
+	public double getControlY2() {
+		if(this.typeOfLine == 1) {
+			return ((CurveBoundLine) this.line).getControlY2();
+		}
+		return 0;
+	}
+	
+	/**
+	 * Function to put the control of the line visible or not
+	 * @param vision (boolean) : If the control should be visible or not
+	 */
 	public void setControlVisible(boolean vision) {
 		if(this.typeOfLine == 1) {
 			this.AnchorControl1.setVisible(vision);
@@ -315,6 +460,15 @@ public class Edge{
 			this.AnchorControl1.setMouseTransparent(!vision);
 			this.AnchorControl2.setMouseTransparent(!vision);
 		}
+	}
+	
+	/**
+	 * Function to in back an edge
+	 */
+	public void toBack() {
+		this.t_weight.toBack();
+		this.head.toBack();
+		this.line.toBack();
 	}
 	
 	/**
