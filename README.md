@@ -16,7 +16,7 @@ You can then create by hand your graph (by adding edge and vertex) or asking the
 
 Finaly you can apply some of algorithm :
 
-![Dijkstra algorithm](./image_ReadMe/Dijkstra.PNGraw=true "Djkstra algorithm")
+![Dijkstra algorithm](./image_ReadMe/Dijkstra.PNG?raw=true "Djkstra algorithm")
 
 Installation
 ------------
